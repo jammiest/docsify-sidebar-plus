@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.log
+*.swp
+*.swo
+*.swn
+.DS_Store
+Thumbs.db

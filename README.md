@@ -21,7 +21,7 @@
    ```
 2. Or via CDN:
    ```html
-   <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-plus@latest/dist/docsify-sidebar-plus.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-plus/collapsible-sidebar.min.js"></script>
    ```
 
 ## Usage Example
