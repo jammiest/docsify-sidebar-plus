@@ -4,11 +4,14 @@
   "description": "Docsify extension for enhanced sidebar menu",
   "main": "collapsible-sidebar.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "release:patch": "npm version patch && npm publish --registry=https://registry.npmjs.org/",
+    "release:minor": "npm version minor && npm publish --registry=https://registry.npmjs.org/",
+    "release:major": "npm version major && npm publish --registry=https://registry.npmjs.org/",
+    "release:beta": "npm version prerelease --preid=beta && npm publish --tag beta --registry=https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
-    "url": "git@gitea.docker.internal:admin/docsify-sidebar-plus.git"
+    "url": "git@github.com:jammiest/docsify-sidebar-plus.git"
   },
   "keywords": [
     "docsify",
