@@ -2,6 +2,8 @@
 
 [中文文档](README_CN.md)
 
+[![docsify Version](https://img.shields.io/badge/docsify-4.13.1+-9055F6)]() [![npm Version](https://img.shields.io/badge/npm-10.9.2+-blue)]()
+
 ## Introduction
 `docsify-sidebar-plus` is a plugin designed to enhance the left sidebar of docsify. It offers additional customization options and features, making document navigation more flexible and powerful.
 

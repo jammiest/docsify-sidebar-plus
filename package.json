@@ -7,7 +7,8 @@
     "release:patch": "npm version patch && npm publish --registry=https://registry.npmjs.org/",
     "release:minor": "npm version minor && npm publish --registry=https://registry.npmjs.org/",
     "release:major": "npm version major && npm publish --registry=https://registry.npmjs.org/",
-    "release:beta": "npm version prerelease --preid=beta && npm publish --tag beta --registry=https://registry.npmjs.org/"
+    "release:beta": "npm version prerelease --preid=beta && npm publish --tag beta --registry=https://registry.npmjs.org/",
+    "build": "uglifyjs collapsible-sidebar.js -o collapsible-sidebar.min.js --compress --mangle"
   },
   "repository": {
     "type": "git",

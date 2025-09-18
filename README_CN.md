@@ -2,6 +2,8 @@
 
 [English Documentation](README.md)
 
+[![docsify Version](https://img.shields.io/badge/docsify-4.13.1+-9055F6)]() [![npm Version](https://img.shields.io/badge/npm-10.9.2+-blue)]()
+
 ## 简介
 `docsify-sidebar-plus` 是一个用于增强 docsify 左侧菜单栏的插件。它提供了更多自定义选项和功能，使文档的导航更加灵活和强大。
 
