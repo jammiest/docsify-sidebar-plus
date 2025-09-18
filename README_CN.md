@@ -24,6 +24,7 @@
 
 ## 使用示例
 ```javascript
+// index.html
 window.$docsify = {
   plugins: [
     function(hook, vm) {
@@ -38,6 +39,18 @@ window.$docsify = {
 };
 ```
 
+## 目录格式
+```markdown
+* 目录1
+  * [标题1](/路径1)
+  * [标题2](/路径2)
+  * [标题3](/路径3)
+* 目录2
+  * [标题4](/路径4)
+```
+
+[](./README_CN.png)
+
 ## 配置选项
 | 参数 | 类型 | 默认值 | 描述 |
 |------|------|--------|------|
@@ -47,6 +60,3 @@ window.$docsify = {
 
 ## 贡献
 欢迎提交 Issue 或 Pull Request 来改进此插件。
-
-## 语言切换
-[English Documentation](README.md)
