@@ -1,0 +1,19 @@
+{
+  "name": "docsify-sidebar-plus",
+  "version": "1.0.0",
+  "description": "Docsify extension for enhanced sidebar menu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitea.docker.internal:admin/docsify-sidebar-plus.git"
+  },
+  "keywords": [
+    "docsify",
+    "sidebar"
+  ],
+  "author": "jammiest",
+  "license": "MIT"
+}
