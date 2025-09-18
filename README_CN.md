@@ -49,7 +49,8 @@ window.$docsify = {
   * [标题4](/路径4)
 ```
 
-[](./README_CN.png)
+## 效果截图
+![](./README_CN.png)
 
 ## 配置选项
 | 参数 | 类型 | 默认值 | 描述 |

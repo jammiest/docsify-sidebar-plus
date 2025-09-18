@@ -49,7 +49,9 @@ window.$docsify = {
   * [Title4](/path4)
 ```
 
-[](./README.png)
+### preview
+
+![](./README.png)
 
 ## Configuration Options
 | Parameter | Type | Default | Description |
