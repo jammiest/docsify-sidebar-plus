@@ -104,7 +104,7 @@
 
 
     var scrollInfo = localStorage.getItem('docsify.sidebar.'+ md5(vm.route.path) +'.scrollPosition');
-    var scrollPosition = scrollInfo.split(',')[0];
+    var scrollPosition = scrollInfo?scrollInfo.split(',')[0]:0;
     config.expireMinutes = config.expireMinutes || 60;
     if (scrollInfo && scrollInfo.split(',').length >= 2 && Number(scrollInfo.split(',')[1]) > (new Date()).getTime()/60) {
       document.querySelector('main>aside.sidebar').scrollTop = scrollPosition;
