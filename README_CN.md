@@ -14,17 +14,21 @@
 4. **搜索集成**：与 docsify 的搜索插件无缝集成。
 5. **响应式设计**：适配不同屏幕尺寸的设备。
 
-## 安装
-1. 通过 npm 安装：
-   ```bash
-   npm install docsify-sidebar-plus
-   ```
-2. 或者直接引入 CDN 链接：
+## 使用方法
+
    ```html
-   <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-plus@1.0.7/collapsible-sidebar.min.js"></script>
+
+     <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-plus@1.1.0/collapsible-sidebar.min.js"></script>
+
+     <!-- 其他脚本 -->
+
    ```
 
-## 使用示例
+
+## 配置（可选）
 ```javascript
 // index.html
 window.$docsify = {

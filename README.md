@@ -14,17 +14,20 @@
 4. **Search Integration**: Seamlessly integrates with docsify's search plugin.
 5. **Responsive Design**: Adapts to devices of different screen sizes.
 
-## Installation
-1. Via npm:
-   ```bash
-   npm install docsify-sidebar-plus
-   ```
-2. Or via CDN:
-   ```html
-   <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-plus@1.0.7/collapsible-sidebar.min.js"></script>
-   ```
+## Usage
 
-## Usage Example
+  ```html
+  
+    <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-plus@1.1.0/collapsible-sidebar.min.js"></script>
+  
+    <!-- Other scripts -->
+  
+  ```
+
+## Configuration (Optional)
 ```javascript
 // index.html
 window.$docsify = {

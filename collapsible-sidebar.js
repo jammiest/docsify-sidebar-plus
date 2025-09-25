@@ -137,7 +137,7 @@
         item.appendChild(btn);
 
         // 初始化状态
-        const isCollapsed = localStorage.getItem(`sidebar-collapse-${itemId}`);
+        const isCollapsed = localStorage.getItem(`docsify.sidebar.collapse.${itemId}`);
         if (isCollapsed === 'true') {
           toggleCollapse(item, btn, true);
         }
@@ -148,7 +148,8 @@
     }
 
     function generateItemId(item) {
-      return md5(item.textContent);
+      // console.log(item.querySelector('ul li:first-child a').href ,item.childNodes[0].nodeValue.trim());
+      return md5(item.querySelector('ul li:first-child a').href);
     }
 
     function toggleCollapse(item, btn, state) {
@@ -171,7 +172,7 @@
         // 保存状态到localStorage
         if (!item.querySelector('ul:has(.active)')) {
           localStorage.setItem(
-            `sidebar-collapse-${itemId}`,
+            `docsify.sidebar.collapse.${itemId}`,
             isCollapsed
           );
         }
