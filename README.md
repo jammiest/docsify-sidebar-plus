@@ -21,7 +21,7 @@
     <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   
-  <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-plus@1.1.0/collapsible-sidebar.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-plus@1.1.3/collapsible-sidebar.min.js"></script>
   
     <!-- Other scripts -->
   
