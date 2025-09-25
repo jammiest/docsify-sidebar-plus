@@ -8,11 +8,11 @@
 `docsify-sidebar-plus` is a plugin designed to enhance the left sidebar of docsify. It offers additional customization options and features, making document navigation more flexible and powerful.
 
 ## Features
-1. **Multi-level Menu Support**: Supports unlimited levels of nested menus.
-2. **Custom Styling**: Allows customizing the appearance of the menu via CSS.
-3. **Dynamic Loading**: Supports asynchronous loading of menu content.
-4. **Search Integration**: Seamlessly integrates with docsify's search plugin.
-5. **Responsive Design**: Adapts to devices of different screen sizes.
+1. **Multi-level menu support**: Support for infinite levels of nested menus.
+2. **Custom styles**: Allow customizing the appearance of the menu through CSS.
+3. **Dynamic loading**: Support for asynchronous loading of menu content.
+4. **Search integration**: Integration with docsify's search plugin.
+5. **Responsive design**: Adapt to different screen sizes.
 
 ## Usage
 
@@ -41,6 +41,24 @@
 
 ![](./README.png)
 
+
+## Configuration
+
+```js
+
+window.$docsify = {
+
+    // Other configurations
+
+      sidebarPlus: {  // Plugin configuration
+        expireMinutes: 60, // Remember sidebar scroll position expiration time (minutes)
+      }
+
+  // Other configurations
+
+}
+
+```
 
 ## Contribution
 Feel free to submit Issues or Pull Requests to improve this plugin.

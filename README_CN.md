@@ -41,5 +41,23 @@
 ## 效果截图
 ![](./README_CN.png)
 
+## 配置
+
+```js
+
+window.$docsify = {
+
+    // 其他配置
+
+      sidebarPlus: {  // 插件配置
+        expireMinutes: 60, // 记住侧边栏滚动位置生效时长（分钟）
+      }
+
+  // 其他配置
+
+}
+
+```
+
 ## 贡献
 欢迎提交 Issue 或 Pull Request 来改进此插件。

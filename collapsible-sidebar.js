@@ -5,6 +5,7 @@
     :root {
       --collapse-btn-size: 16px;
       --collapse-btn-color: var(--theme-color, #42b983);
+      --collapse-li-border-color: #00ff004a;
       --collapse-transition: 0.2s ease;
       --item-spacing: 5px;
     }
@@ -55,7 +56,7 @@
     }
     .sidebar-nav>ul>li {
       border-width: 1px;
-      border-color: #00ff004a;
+      border-color: var(--collapse-li-border-color, #00ff004a);
       border-style: solid;
     }
     
@@ -91,9 +92,30 @@
 
   // 主函数
   function install(hook, vm) {
+    const config = vm.config.sidebarPlus || {};
+
+
+    console.log(config);
+
     hook.ready(function () {
       const sidebar = document.querySelector('.sidebar-nav');
+
       if (!sidebar) return;
+
+
+    var scrollInfo = localStorage.getItem('docsify.sidebar.'+ md5(vm.route.path) +'.scrollPosition');
+    var scrollPosition = scrollInfo.split(',')[0];
+    config.expireMinutes = config.expireMinutes || 60;
+    if (scrollInfo && scrollInfo.split(',').length >= 2 && Number(scrollInfo.split(',')[1]) > (new Date()).getTime()/60) {
+      document.querySelector('main>aside.sidebar').scrollTop = scrollPosition;
+    }
+      document.querySelector('main>aside.sidebar').addEventListener('scroll',function(e) {
+        scrollPosition = e.target.scrollTop
+      });
+  
+      setInterval(function() {
+        localStorage.setItem('docsify.sidebar.'+ md5(vm.route.path) +'.scrollPosition', scrollPosition+','+((new Date()).getTime()/60 + config.expireMinutes));
+      }, 2000);
 
       // 使用MutationObserver监听DOM变化
       const observer = new MutationObserver(function (mutations) {
