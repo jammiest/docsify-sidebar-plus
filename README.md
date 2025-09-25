@@ -42,30 +42,5 @@
 ![](./README.png)
 
 
-## Configuration (Optional)
-```javascript
-// index.html
-window.$docsify = {
-  plugins: [
-    function(hook, vm) {
-      hook.ready(function() {
-        // Initialize the plugin
-        window.DocsifySidebarPlus.init({
-          // Configuration options
-        });
-      });
-    }
-  ]
-};
-```
-
-
-## Configuration Options
-| Parameter | Type | Default | Description |
-|------|------|--------|------|
-| `maxLevel` | number | 2 | Maximum menu level |
-| `customCSS` | string | null | Path to custom CSS file |
-| `asyncLoad` | boolean | false | Whether to load menu asynchronously |
-
 ## Contribution
 Feel free to submit Issues or Pull Requests to improve this plugin.

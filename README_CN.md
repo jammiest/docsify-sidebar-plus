@@ -41,31 +41,5 @@
 ## 效果截图
 ![](./README_CN.png)
 
-
-
-## 配置（可选）
-```javascript
-// index.html
-window.$docsify = {
-  plugins: [
-    function(hook, vm) {
-      hook.ready(function() {
-        // 初始化插件
-        window.DocsifySidebarPlus.init({
-          // 配置项
-        });
-      });
-    }
-  ]
-};
-```
-
-## 配置选项
-| 参数 | 类型 | 默认值 | 描述 |
-|------|------|--------|------|
-| `maxLevel` | number | 2 | 最大菜单层级 |
-| `customCSS` | string | null | 自定义 CSS 文件路径 |
-| `asyncLoad` | boolean | false | 是否异步加载菜单 |
-
 ## 贡献
 欢迎提交 Issue 或 Pull Request 来改进此插件。
