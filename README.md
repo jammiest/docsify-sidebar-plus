@@ -27,6 +27,21 @@
   
   ```
 
+## Directory Format
+```markdown
+* Category1
+  * [Title1](/path1)
+  * [Title2](/path2)
+  * [Title3](/path3)
+* Category2
+  * [Title4](/path4)
+```
+
+### preview
+
+![](./README.png)
+
+
 ## Configuration (Optional)
 ```javascript
 // index.html
@@ -44,19 +59,6 @@ window.$docsify = {
 };
 ```
 
-## Directory Format
-```markdown
-* Category1
-  * [Title1](/path1)
-  * [Title2](/path2)
-  * [Title3](/path3)
-* Category2
-  * [Title4](/path4)
-```
-
-### preview
-
-![](./README.png)
 
 ## Configuration Options
 | Parameter | Type | Default | Description |
