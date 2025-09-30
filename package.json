@@ -16,7 +16,9 @@
   },
   "keywords": [
     "docsify",
-    "sidebar"
+    "sidebar",
+    "collapse",
+    "plugin"
   ],
   "author": "jammiest",
   "license": "MIT",
