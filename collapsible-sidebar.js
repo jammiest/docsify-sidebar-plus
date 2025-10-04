@@ -87,6 +87,33 @@
         padding-right: calc(var(--collapse-btn-size) + 8px);
       }
     }
+/* 无效链接样式 */
+.invalid-link {
+  position: relative;
+  opacity: 0.6;
+  color: #dc3545 !important;
+  text-decoration: line-through;
+}
+
+.invalid-link:hover {
+  opacity: 0.8;
+}
+
+.invalid-link::after {
+  content: " ⚠️";
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.invalid-link-hidden {
+  display: none !important;
+}
+
+/* 可选：添加加载状态 */
+.link-checking {
+  opacity: 0.7;
+  pointer-events: none;
+}
   `;
   document.head.appendChild(style);
 
@@ -94,34 +121,45 @@
   function install(hook, vm) {
     const config = vm.config.sidebarPlus || {};
 
-
-    console.log(config);
+    config.expireMinutes = config.expireMinutes || 60;
 
     hook.ready(function () {
       const sidebar = document.querySelector('.sidebar-nav');
-
       if (!sidebar) return;
 
 
-    var scrollInfo = localStorage.getItem('docsify.sidebar.'+ md5(vm.route.path) +'.scrollPosition');
-    var scrollPosition = scrollInfo?scrollInfo.split(',')[0]:0;
-    config.expireMinutes = config.expireMinutes || 60;
-    if (scrollInfo && scrollInfo.split(',').length >= 2 && Number(scrollInfo.split(',')[1]) > (new Date()).getTime()/60) {
-      document.querySelector('main>aside.sidebar').scrollTop = scrollPosition;
-    }
-      document.querySelector('main>aside.sidebar').addEventListener('scroll',function(e) {
+      var scrollInfo = localStorage.getItem('docsify.sidebar.' + md5(vm.route.path) + '.scrollPosition');
+      var scrollPosition = scrollInfo ? scrollInfo.split(',')[0] : 0;
+      if (scrollInfo && scrollInfo.split(',').length >= 2 && Number(scrollInfo.split(',')[1]) > (new Date()).getTime() / 60) {
+        document.querySelector('main>aside.sidebar').scrollTop = scrollPosition;
+      }
+      document.querySelector('main>aside.sidebar').addEventListener('scroll', function (e) {
         scrollPosition = e.target.scrollTop
       });
-  
-      setInterval(function() {
-        localStorage.setItem('docsify.sidebar.'+ md5(vm.route.path) +'.scrollPosition', scrollPosition+','+((new Date()).getTime()/60 + config.expireMinutes));
+
+      setInterval(function () {
+        localStorage.setItem('docsify.sidebar.' + md5(vm.route.path) + '.scrollPosition', scrollPosition + ',' + ((new Date()).getTime() / 60 + config.expireMinutes));
       }, 2000);
 
       // 使用MutationObserver监听DOM变化
       const observer = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
           if (mutation.addedNodes.length) {
-            initCollapseButtons();
+            currentPathMD5 = md5(window.Docsify.util.getParentPath(vm.route.path))
+            var storageStr = localStorage.getItem('docsify.sidebar.currentSidebar');
+            var cacheExpireTime = (new Date()).getTime() / 60 + 10;
+            if (storageStr && storageStr.split(',').length >= 2) {
+              cacheExpireTime = Number(storageStr.split(',')[1])
+              storageStr = storageStr.split(',')[0]
+            }
+            localStorage.setItem('docsify.sidebar.currentSidebar', currentPathMD5 + ',' + ((new Date()).getTime() / 60 + config.expireMinutes));
+
+            // console.log(storageStr, currentPathMD5, cacheExpireTime < (new Date()).getTime() / 60);
+
+            if (storageStr == undefined || storageStr != currentPathMD5 || cacheExpireTime < (new Date()).getTime() / 60) {
+              initCollapseButtons();
+              invalidLink();
+            }
           }
         });
       });
@@ -131,8 +169,80 @@
         subtree: true
       });
 
+      currentPathMD5 = md5(window.Docsify.util.getParentPath(vm.route.path))
+      var storageStr = localStorage.getItem('docsify.sidebar.currentSidebar');
+      var cacheExpireTime = (new Date()).getTime() / 60 + 10;
+      if (storageStr && storageStr.split(',').length >= 2) {
+        cacheExpireTime = Number(storageStr.split(',')[1])
+        storageStr = storageStr.split(',')[0]
+      }
+      localStorage.setItem('docsify.sidebar.currentSidebar', currentPathMD5 + ',' + ((new Date()).getTime() / 60 + config.expireMinutes));
+      // console.log(storageStr, currentPathMD5, cacheExpireTime < (new Date()).getTime() / 60);
       initCollapseButtons();
+      invalidLink();
     });
+
+
+    /**
+     * 检查markdown文件是否存在（带10分钟缓存）
+     * @param {string} path 路由路径，如 'markdown'
+     * @param {number} linkCheckCacheTime 链接检查缓存时间，单位：分钟
+     * @returns {Promise<boolean>} 文件是否存在
+     */
+    const checkMarkdownFileExists = (function () {
+      // 缓存对象，存储文件存在性检查结果
+      const cache = new Map();
+      return async function (path,linkCheckCacheTime) {
+        try {
+          // 构建缓存键
+          const cacheKey = `docsify.sidebar.file.exists.${path}`;
+
+          // 检查缓存是否存在且未过期
+          const cached = cache.get(cacheKey);
+          const now = Date.now();
+
+          if (cached && (now - cached.timestamp /60 /1000 < linkCheckCacheTime)) {
+            // console.log(`📁 使用缓存结果: ${path}.md -> ${cached.exists}`);
+            return cached.exists;
+          }
+          // console.log(path);
+          // 移除路径开头的斜杠，构建文件路径
+          path = path ? path : 'README'
+          path = path.endsWith('/') ? path + 'README' : path;
+          const filePath = path.startsWith('/') ? path.slice(1) + '.md' : path + '.md';
+          // const filePath = path;
+          // 使用Docsify的get方法请求文件
+          const content = await Docsify.get(filePath);
+
+          // 如果内容为空或返回404，则认为文件不存在
+          const exists = !(!content || content.includes('404') || content.trim() === '');
+
+          // console.log(`🔍 检查文件: ${filePath} : ${exists}`);
+
+
+          // 更新缓存
+          cache.set(cacheKey, {
+            exists: exists,
+            timestamp: now,
+            filePath: filePath
+          });
+
+          return exists;
+
+        } catch (error) {
+          // 即使是错误也缓存，避免频繁请求失败的文件
+          const cacheKey = `docsify.sidebar.file.exists.${path}`;
+          cache.set(cacheKey, {
+            exists: false,
+            timestamp: Date.now(),
+            filePath: path + '.md',
+            error: error.message
+          });
+
+          return false;
+        }
+      };
+    })();
 
     function initCollapseButtons() {
       const sidebar = document.querySelector('.sidebar-nav ul');
@@ -169,8 +279,144 @@
       });
     }
 
+    /**
+     * 检测并处理无效链接
+     */
+    async function invalidLink() {
+      const config = vm.config.sidebarPlus || {};
+      const flag = config.invalidLinkStyle || 'show'; // 无效的链接菜单控制，隐藏|异常提醒|显示(默认) hide|alert|show
+      const invalidLinkTitle = config.invalidLinkTitle || 'invaild link'; // 无效链接提示文本，默认'invaild link'
+      const linkCheckCacheTime = config.linkCheckCacheTime || 10; // 链接可用性异步检测缓存时间（分钟），默认10分钟
+      // 如果不需要处理无效链接，直接返回
+      if (flag === 'show') {
+        return;
+      }
+
+      try {
+        // 获取侧边栏所有链接
+        const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+        if (!sidebarLinks.length) {
+          // console.log('未找到侧边栏链接');
+          return;
+        }
+
+        // 获取当前路由信息
+        const basePath = vm.router.getBasePath();
+        const currentPath = vm.route.path;
+
+        // console.log(`🔍 开始检测无效链接，模式: ${flag}, 共 ${sidebarLinks.length} 个链接`);
+
+        // 批量检查链接有效性
+        const checkPromises = Array.from(sidebarLinks).map(async (link) => {
+          const href = link.getAttribute('href');
+          if (!href || !href.includes('#/')) {
+            return; // 跳过非内部链接
+          }
+
+          try {
+            // 提取路由路径
+            const routeMatch = href.match(/#\/([^?]*)/);
+            if (!routeMatch) return;
+
+            let routePath = routeMatch[1];
+
+            // 处理相对路径（转换为绝对路径比较）
+            if (routePath.startsWith('./')) {
+              routePath = basePath + routePath.slice(2);
+            } else if (routePath.startsWith('../')) {
+              routePath = vm.router.getParentPath(basePath) + routePath.slice(3);
+            }
+
+            // 检查文件是否存在
+            const exists = await checkMarkdownFileExists(routePath,linkCheckCacheTime);
+
+            if (!exists) {
+              // console.warn(`❌ 无效链接: ${routePath}`);
+
+              // 根据配置处理无效链接
+              handleInvalidLink(link, routePath, flag,invalidLinkTitle);
+            } else {
+              // 确保有效链接没有无效样式
+              link.classList.remove('invalid-link', 'invalid-link-hidden');
+              link.style.display = '';
+              link.title = link.title.replace('${invalidLinkTitle}', '');
+            }
+
+          } catch (error) {
+            // console.error(`检查链接 ${href} 时出错:`, error);
+          }
+        });
+
+        // 等待所有检查完成
+        await Promise.allSettled(checkPromises);
+        // console.log('✅ 无效链接检测完成');
+
+      } catch (error) {
+        // console.error('无效链接检测失败:', error);
+      }
+    }
+
+    /**
+     * 处理无效链接
+     */
+    function handleInvalidLink(link, routePath, flag,invalidLinkTitle) {
+      const originalTitle = link.getAttribute('data-original-title') || link.title;
+
+      switch (flag) {
+        case 'hide':
+          // 隐藏无效链接
+          link.style.display = 'none';
+          link.classList.add('invalid-link-hidden');
+          break;
+
+        case 'alert':
+          // 添加视觉提示
+          link.classList.add('invalid-link');
+          link.title = invalidLinkTitle;
+
+          // 添加点击警告
+          const originalClick = link.onclick;
+          link.onclick = function (e) {
+            if (link.classList.contains('invalid-link')) {
+              // console.warn(`⚠️ 文件不存在: ${routePath}.md`);
+            }
+            if (originalClick) return originalClick.call(this, e);
+          };
+          break;
+
+        default:
+          // 默认显示，但添加样式提示
+          link.classList.add('invalid-link');
+          link.title = invalidLinkTitle;
+          break;
+      }
+
+      // 保存原始标题
+      if (!link.getAttribute('data-original-title')) {
+        link.setAttribute('data-original-title', originalTitle);
+      }
+    }
+
+    /**
+     * 重置链接状态（用于重新检查）
+     */
+    function resetLinkStates() {
+      const links = document.querySelectorAll('.sidebar-nav a');
+      links.forEach(link => {
+        link.classList.remove('invalid-link', 'invalid-link-hidden');
+        link.style.display = '';
+
+        const originalTitle = link.getAttribute('data-original-title');
+        if (originalTitle) {
+          link.title = originalTitle;
+        }
+
+        // 恢复原始点击事件（简化处理）
+        link.onclick = null;
+      });
+    }
+
     function generateItemId(item) {
-      // console.log(item.querySelector('ul li:first-child a').href ,item.childNodes[0].nodeValue.trim());
       return md5(item.querySelector('ul li:first-child a').href);
     }
 
