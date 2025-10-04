@@ -22,7 +22,7 @@
     <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   
-  <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-plus@1.2.0/collapsible-sidebar.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-plus@1.2.2/collapsible-sidebar.min.js"></script>
   
     <!-- Other scripts -->
   
