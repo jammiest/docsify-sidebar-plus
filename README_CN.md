@@ -52,7 +52,7 @@
 
 
 ## 效果截图
-![](./README_CN.png)
+![](./sidebar.png)
 
 ## 配置
 

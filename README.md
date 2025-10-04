@@ -51,8 +51,7 @@ Or format like bellow
 
 ### preview
 
-![](./README.png)
-
+![](./sidebar.png)
 
 ## Configuration
 
