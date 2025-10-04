@@ -1,6 +1,6 @@
 {
   "name": "docsify-sidebar-plus",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Docsify extension for enhanced sidebar menu",
   "main": "collapsible-sidebar.js",
   "scripts": {
