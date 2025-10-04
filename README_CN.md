@@ -31,23 +31,25 @@
 
 ## 目录格式
 ```markdown
-* 目录1
-  * [标题1](/路径1)
-  * [标题2](/路径2)
-  * [标题3](/路径3)
-* 目录2
-  * [标题4](/路径4)
+* example
+  * [README](/)
+  * [markdown](/markdown)
+  * [Debug](/Debug)
+  * [invaild-link](/invaild-link)
+* more
+  * [docsify](https://docsify.js.org/)
 ```
 
 或者另一种格式
 
 ```markdown
-- 目录1
-  - [标题1](/路径1)
-  - [标题2](/路径2)
-  - [标题3](/路径3)
-- 目录2
-  - [标题4](/路径4)
+- example
+  - [README](/)
+  - [markdown](/markdown)
+  - [Debug](/Debug)
+  - [invaild-link](/invaild-link)
+- more
+  - [docsify](https://docsify.js.org/)
 ```
 
 
